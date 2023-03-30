@@ -29,6 +29,8 @@ def signup(request):
         form = signupForm()
     return render(request, 'common/signup.html', {'form': form})
 
+def produce(request):
+    return render(request, 'common/produce.html')
 
 
 
