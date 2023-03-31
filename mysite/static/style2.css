@@ -17,3 +17,23 @@ body {
 main {
   flex: 1 0 auto;
 }
+
+.left-align p {
+  margin-left: 10px;
+}
+
+.center-left-align p {
+  text-align: center;
+  margin-right: 250px;
+}
+
+body {
+  max-width: 100%;
+  margin: 0 auto; /* 가운데 정렬을 위해 필요한 코드 */
+}
+
+/*
+body {
+  transform: scale(0.8);
+}
+*/
