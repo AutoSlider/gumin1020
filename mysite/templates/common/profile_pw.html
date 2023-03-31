@@ -2,64 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Title</title>
 </head>
-    <body>
-        {% extends 'base.html' %}
-        {% block content %}
-<!-- 정보변경 버튼(회원정보 변경, 비밀번호 변경) -->
-        {% if user.is_authenticated %}
-        <div id="profile_div" class="dropdown" style="text-align:right; position:relative; right:50px; top:50px;">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            정보변경
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'common:profile' %}">회원정보 변경</a></li>
-                <li><a class="dropdown-item" href="{% url 'common:profile_pw' %}">비밀번호 변경</a></li>
-            </ul>
+<body>
+{% extends 'base.html' %}
+{% block content %}
+<div id ="logo_div" class="logo">
+    <a href="{% url 'common:main' %}">
+        <img id="logo_img" src="../../static/logo3.png" class="img-fluid">
+    </a>
+</div>
+<div style="width:500px; margin: 0px auto; position:relative; top:250px">
+    <form method="post">
+    {% csrf_token %}
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="old_password">기존 비밀번호</span>
+            <input name="old_password" type="password" class="form-control" aria-label="Username" aria-describedby="basic-addon1" required>
         </div>
-        {% endif %}
-
-<!-- 로고 -->
-        <div id ="logo_div" class="logo">
-            <img id="logo_img" src="../static/logo3.png" class="img-fluid">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="new_password1">새 비밀번호</span>
+            <input name="new_password1" type="password" class="form-control" aria-label="new_password1" aria-describedby="basic-addon1" required>
         </div>
-
-<!-- 아이디, 비밀번호 입력란, 로그인 버튼 -->
-        <form action="{% url 'common:login' %}" method="POST">
-            {% csrf_token %}
-            {% include "form_errors.html" %}
-            <div id="id_div" class="input-group mb-3">
-                <span id="id_span" class="input-group-text">아이디</span>
-                <input type="text" name="username" class="form-control" placeholder="Username" required>
-            </div>
-            <div id="password_div" class="input-group mb-3">
-                <span class="input-group-text">비밀번호</span>
-                <input type="password"  name="password" class="form-control" placeholder="password" required>
-            </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="new_password2">새 비밀번호(확인)</span>
+            <input name="new_password2" type="password" class="form-control" aria-label="new_password2" aria-describedby="basic-addon1" required>
+        </div>
             <div id="login_div">
-                <button id="login_button"type="submit" class="btn btn-success btn-lg">로그인</button>
+                <button type="submit" class="btn btn-secondary btn-lg">변경하기</button>
             </div>
-        </form>
-
-<!-- 회원가입 버튼 -->
-        {% if user.is_authenticated %}
-        {% else %}
-        <div id="signup_div">
-            <a href="{% url 'common:signup' %}">
-                <button id="signup_button" type="submit" class="btn btn-warning btn-lg">회원가입</button>
-            </a>
-        </div>
-        {% endif %}
-
-<!-- 시작하기 버튼 -->
-        {% if user.is_authenticated %}
-        <div id="init_div">
-            <a href="{% url 'pybo:pybo' %}">
-                <button id="init_button" type="submit" class="btn btn-secondary btn-lg">시작하기</button>
-            </a>
-        </div>
-        {% endif %}
-
+    </form>
+</div>
 <!-- 푸터 -->
         <div id="footer_div">
         <hr>
@@ -87,5 +59,18 @@
     <p id="footer_Copyright">Copyright ⓒ2023 And.&nbsp;All Rights Reserved.</p>
         </div>
         {% endblock %}
+<!-- 자바스크립트 -->
+<script>
+const password = document.getElementById('new_password1');
+const confirm_password = document.getElementById('new_password2');
+const loginButton = document.querySelector('#login_div button');
+
+loginButton.addEventListener('click', () => {
+  if (password.value !== confirm_password.value) {
+    alert("'새 비밀번호'와 '새 비밀번호(확인)'이 다릅니다.");
+    return false;
+  }
+});
+</script>
 </body>
 </html>
